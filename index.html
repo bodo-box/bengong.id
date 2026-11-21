@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bengong.id - Bengong Jalan Menuju Pembebasan</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+  body{background:#0a1628;color:#e8f4ff;overflow-x:hidden}
+  header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%}
+  .logo{font-size:24px;font-weight:800;color:#cfeaff}
+  nav a{color:#a8c8e8;margin:0 12px;text-decoration:none;font-size:14px}
+  .hero{text-align:center;padding:40px 20px 20px}
+  .hero h1{font-size:64px;line-height:1}
+  .hero p{opacity:.8;margin:12px 0 24px}
+  .btn{padding:14px 28px;border-radius:30px;border:none;cursor:pointer;font-weight:700;font-size:15px}
+  .btn-primary{background:#1e4a73;color:white}
+  .btn-outline{background:transparent;color:white;border:1px solid #fff}
+  .moon{font-size:90px}
+  .eyes{font-size:48px;letter-spacing:30px;margin:10px 0}
+  .chair{font-size:80px}
+  section{max-width:900px;margin:30px auto;background:#0f2240;padding:26px;border-radius:20px}
+  h2{margin-bottom:14px}
+  input,select,textarea{width:100%;padding:13px;margin:8px 0;border-radius:12px;border:1px solid #2a4a6b;background:#0a1628;color:white}
+  .paket-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .paket{border:1px solid #2a4a6b;padding:18px;border-radius:16px;cursor:pointer}
+  .paket.active{border:2px solid #4da3ff;background:#14365e}
+  .paket b{font-size:20px}
+  .paket span{color:#ffd166;font-weight:700}
+  .hidden{display:none !important}
+  #timer{font-size:52px;text-align:center;margin:16px 0;font-weight:800}
+  .pay{border:1px solid #2a4a6b;padding:12px;border-radius:12px;margin:8px 0;cursor:pointer}
+  .pay.active{border:2px solid #4da3ff;background:#14365e}
+  footer{text-align:center;padding:30px;opacity:.6;font-size:13px}
+  @media(max-width:600px){.hero h1{font-size:42px}.paket-grid{grid-template-columns:1fr}}
+  #gerbangTutup{position:fixed;inset:0;background:#000;color:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+  #gerbangTutup h1{font-size:48px;letter-spacing:3px;font-family:Georgia,serif;font-weight:normal}
+  #gerbangTutup .sub{color:#aaa;font-size:15px;line-height:1.7;margin:10px 0}
+  #gerbangTutup .count{font-size:36px;margin:20px 0}
+  #gerbangTutup button{background:#fff;color:#000;border:none;padding:15px 25px;border-radius:50px;font-weight:bold;width:100%;max-width:320px;cursor:pointer;margin-top:10px}
+  #gerbangTutup button.ghost{background:transparent;color:#fff;border:1px solid #444;font-weight:normal}
+  #layarKusir{position:fixed;inset:0;background:#000;color:#fff;z-index:9998;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+  #layarKusir h1{font-size:42px;font-family:Georgia,serif}
+  #layarKusir button{background:#fff;color:#000;border:none;padding:15px 25px;border-radius:50px;font-weight:bold;width:100%;max-width:320px;cursor:pointer;margin-top:20px}
+</style>
+</head>
+<body>
+
+<div id="gerbangTutup">
+  <div style="max-width:420px;width:100%">
+    <h1>TUTUP.</h1>
+    <p class="sub">Lagi pada tidur.</p>
+    <p class="sub">Buka lagi jam 00.00 WIB</p>
+    <div class="count" id="countdownTutup">-- : -- : --<div style="font-size:13px;color:#888;letter-spacing:2px;margin-top:5px">SISA WAKTU SAMPE BUKA</div></div>
+    <button onclick="setAlarm()">Ingetin Gue Jam 23.55</button><br>
+    <button class="ghost" onclick="location.reload()">Cek Lagi</button>
+    <p style="font-size:12px;color:#555;margin-top:25px">bengong.id<br>Buka 00.00 - 04.30 WIB. Di luar itu tutup.</p>
+  </div>
+</div>
+
+<div id="layarKusir" class="hidden">
+  <div style="max-width:420px;width:100%">
+    <h1>SUBUH UDAH DATENG.</h1>
+    <p class="sub" style="color:#aaa;margin:15px 0;line-height:1.7">Udah ya bengongnya, besok lagi.<br>Lu keusir karena jam 04.30 udah lewat.<br>Besok dateng lebih awal ya.</p>
+    <button onclick="location.reload()">Oke, Ngerti</button>
+    <p style="font-size:12px;color:#555;margin-top:15px">Gak dapet sertifikat karena belum selesai.</p>
+  </div>
+</div>
+
+<div id="isiUtama">
+<header>
+  <div class="logo">bengong.id</div>
+  <nav><a href="#daftar">Daftar</a><a href="#paket">Paket</a><a href="#box">Box Saya</a><a href="#tentang">Tentang</a></nav>
+</header>
+
+<div class="hero">
+  <div class="moon">🌙</div>
+  <div class="eyes">👁️ 👁️</div>
+  <div class="chair">🪑</div>
+  <h1>bengong.id</h1>
+  <p>bengong jalan menuju pembebasan</p>
+  <p style="font-size:13px">Buka Jam 00.00 - Subuh • Wajib Daftar Dulu • Khusus 18+</p>
+  <button class="btn btn-primary" onclick="scrollToId('daftar')">Daftar</button>
+  <button class="btn btn-outline" onclick="scrollToId('paket')">Pilih Paket</button>
+</div>
+
+<section id="daftar">
+  <h2>1. Daftar Dulu Bro</h2>
+  <p style="font-size:13px;opacity:.8">Kata sandi ini adalah KUNCI Box kamu. Kami sebagai pemilik TIDAK menyimpan & TIDAK bisa membaca isinya. Kalau lupa, isi Box hilang.</p>
+  <input id="nama" placeholder="Nama / Nama Samaran">
+  <input id="email" placeholder="Email">
+  <input id="pass" type="password" placeholder="Buat Kata Sandi Box (ingat baik-baik!)">
+
+  <div style="background:#0a1628;border:1px solid #2a4a6b;padding:14px;border-radius:12px;margin:10px 0;font-size:13px;line-height:1.6">
+    <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;margin-bottom:10px">
+      <input type="checkbox" id="cekUmur" style="width:auto;margin-top:3px" onchange="cekTombolDaftar()">
+      <span>Gue <b>18 tahun ke atas</b>. Gue ngerti bengong.id cuma buka buat 18+.</span>
+    </label>
+    <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer">
+      <input type="checkbox" id="cekDisclaimer" style="width:auto;margin-top:3px" onchange="cekTombolDaftar()">
+      <span>Gue udah baca & ngerti <a href="#" onclick="bukaDisclaimer(event)" style="color:#4da3ff">Disclaimer</a>. Ini <b>bukan terapi / psikolog / dokter</b>. Kalo pas bengong gue ngerasa pusing / panik / sesek, gue bakal berhenti sendiri. Apa yang gue rasain & tulis, tanggung jawab gue sendiri.</span>
+    </label>
+  </div>
+
+  <button id="btnDaftar" class="btn btn-primary" onclick="daftar()" disabled style="opacity:.4;cursor:not-allowed">Centang 2 Kotak Di Atas Dulu Bro</button>
+  <p id="daftarMsg" style="margin-top:10px;color:#7dff9e"></p>
+</section>
+
+<section id="paket">
+  <h2>2. Pilih Paket - Klik Durasi Otomatis</h2>
+  <div class="paket-grid">
+    <div class="paket" onclick="pilihPaket('A',7200,this)"><b>PAKET A - PEMULA</b><br><span>Rp 200.000</span><br>2 Jam • 1 Musik • Timer • Buku Bengong Digital</div>
+    <div class="paket" onclick="pilihPaket('B',10800,this)"><b>PAKET B - DALEM</b><br><span>Rp 350.000</span><br>3 Jam • Ganti Musik Bebas • Mode Gak Bisa Keluar</div>
+    <div class="paket" onclick="pilihPaket('C',18000,this)"><b>PAKET C - SAMPE SUBUH</b><br><span>Rp 500.000</span><br>Full 00.00 - Subuh • Bengong Bareng • Rangkuman Otomatis</div>
+    <div class="paket" onclick="pilihPaket('D',2592000,this)"><b>PAKET D - MAKSIMAL</b><br><span>Rp 1.000.000</span><br>1 Bulan Full • Tiap Malem • E-Book Hasil Bengong</div>
+  </div>
+  <p id="paketTerpilih" style="margin-top:12px">Belum pilih paket.</p>
+  <h3 style="margin-top:18px">3. Metode Pembayaran</h3>
+  <div class="pay" onclick="pilihBayar('QRIS',this)">📱 <b>QRIS</b> - Scan, langsung masuk. Paling gampang.</div>
+  <div class="pay" onclick="pilihBayar('Transfer Bank',this)">🏦 <b>Transfer Bank</b> - BCA / Mandiri / BRI - 7651024327 a.n Syamsul Bachtiar</div>
+  <div class="pay" onclick="pilihBayar('E-Wallet',this)">💸 <b>E-Wallet</b> - DANA / OVO / GoPay -  a.n Bengong.id</div>
+  <button class="btn btn-primary" style="margin-top:12px" onclick="bayar()">Saya Sudah Bayar / Bayar Sekarang</button>
+  <p id="bayarMsg" style="margin-top:10px;color:#ffd166"></p>
+  <div style="margin:30px 0">
+    <h3 style="text-align:center">Apa Yang Lu Dapet Kalo Bengong Di Sini?</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div style="background:#1a1a1a;padding:14px;border-radius:12px">📦 <b>Box Pribadi</b><br><span style="font-size:13px;opacity:.8">Tulis apa aja, kehapus abis subuh. Admin gak bisa baca.</span></div>
+      <div style="background:#1a1a1a;padding:14px;border-radius:12px">🌑 <b>Ritual Bengong</b><br><span style="font-size:13px;opacity:.8">Layar gelap, dituntun pelan-pelan, tanpa notif.</span></div>
+      <div style="background:#1a1a1a;padding:14px;border-radius:12px">🏆 <b>Bukti Bengong</b><br><span style="font-size:13px;opacity:.8">Dapet sertifikat + surat buat diri sendiri besok pagi.</span></div>
+      <div style="background:#1a1a1a;padding:14px;border-radius:12px">👥 <b>Bengong Bareng</b><br><span style="font-size:13px;opacity:.8">Malam ini banyak orang lagi bengong bareng lu, tanpa ngobrol.</span></div>
+    </div>
+  </div>
+  <section id="faq" style="max-width:900px;margin:30px auto;background:#0f2240;padding:26px;border-radius:20px">
+    <h2 style="text-align:center;margin-bottom:6px">Sering Ditanya Orang</h2>
+    <p style="text-align:center;opacity:.7;font-size:13px;margin-bottom:20px">Kalo lu mikir gini juga, wajar bro. Kita jawab jujur aja.</p>
+    <style>.faq-item{border:1px solid #2a4a6b;border-radius:14px;margin-bottom:12px;overflow:hidden}.faq-q{padding:16px;cursor:pointer;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:#0a1628}.faq-q:hover{background:#14365e}.faq-a{display:none;padding:16px;line-height:1.7;font-size:14px;opacity:.9;background:#0f2240}.faq-item.open .faq-a{display:block}.faq-item.open .faq-q{color:#4da3ff}</style>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Mau bengong kok harus bayar? <span>+</span></div><div class="faq-a">Bengongnya gratis bro. Yang lu bayar itu tempatnya, musiknya, timernya, sama Box-nya yang ngunci curhatan lu biar gak dibaca siapa-siapa.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apa manfaatnya bengong? <span>+</span></div><div class="faq-a">1. Otak Reset - 2. Ide muncul pas bengong - 3. 2 Jam gak pegang HP - 4. Curhat aman di Box.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Beneran pemilik gak bisa baca Box saya? <span>+</span></div><div class="faq-a">Beneran. Box lu dienkripsi pake kata sandi lu sendiri. Kita cuma nyimpen kotak terkunci.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Kenapa cuma buka jam 00.00 - Subuh? <span>+</span></div><div class="faq-a">Karena siang itu berisik bro. Jam 00.00 - Subuh itu satu-satunya jam dimana dunia diem.</div></div>
+  </section>
+</section>
+
+<section id="ruang" class="hidden">
+  <h2>4. Ruang Bengong Digital</h2>
+  <p id="bareng" style="text-align:center;font-size:13px;opacity:.8">Malam ini ada 47 orang lagi yang lagi bengong bareng lu.</p>
+  <p id="infoRuang"></p>
+  <label>Pilih Musik Bengong:</label>
+  <select id="musik" onchange="gantiMusik()">
+    <option value="hujan">🌧️ Hujan</option>
+    <option value="kipas">🌀 Kipas Angin</option>
+    <option value="warung">☕ Warung Kopi</option>
+    <option value="laut">🌊 Laut Malam</option>
+  </select>
+  <p style="font-size:13px;opacity:.8">Musiknya langsung dibuat dari browser lu, tanpa mp3. Klik Mulai Bengong, langsung bunyi.</p>
+  <div id="timer">00:00:00</div>
+  <p id="pemantik" style="text-align:center;font-size:16px;opacity:.85;margin-top:10px">Tarik napas... lepasin... gak usah mikir apa-apa dulu.</p>
+  <button class="btn btn-primary" onclick="mulaiBengong()">Mulai Bengong</button>
+  <button class="btn btn-outline" onclick="selesaiBengong()">Selesai Lebih Awal</button>
+</section>
+
+<section id="hasil" class="hidden">
+  <h2>5. Tadi Lu Bengong Dapet Apa?</h2>
+  <textarea id="hasilText" rows="6" placeholder="Tulis bebas... ide, curhat, lamunan, apa aja. Cuma lu yang bisa baca nanti."></textarea>
+  <p style="font-size:12px;opacity:.7;text-align:center;margin-top:8px">Tulis se-jujur-jujurnya. Ini akan kebakar sendiri abis subuh. Admin gak bisa baca, gue janji.</p>
+  <div style="display:flex;gap:10px;margin-top:8px">
+    <button onclick="alert('Oke, besok pagi surat ini gue kirim ke email lu.')" style="flex:1;padding:10px;border-radius:10px">💌 Simpan Buat Gue</button>
+    <button onclick="alert('Oke, tulisan ini bakal kebakar abis subuh, gak ada jejak.')" style="flex:1;padding:10px;border-radius:10px">🔥 Bakar Abis Subuh</button>
+  </div>
+  <button class="btn btn-primary" onclick="simpanBox()">Simpan Ke Box Saya (Terkunci)</button>
+  <p id="simpanMsg" style="color:#7dff9e;margin-top:10px"></p>
+</section>
+
+<section id="box">
+  <h2>🔒 Box Saya - Private, Pemilik Gak Bisa Baca</h2>
+  <p style="font-size:13px;opacity:.8">Masukkan kata sandi Box kamu untuk membuka. Data dienkripsi di browser kamu, bukan di server kami.</p>
+  <input id="bukaPass" type="password" placeholder="Masukkan Kata Sandi Box">
+  <button class="btn btn-outline" onclick="bukaBox()">Buka Box Saya</button>
+  <div id="isiBox" style="margin-top:14px;white-space:pre-wrap"></div>
+</section>
+<section id="tentang" style="text-align:center">
+  <h2>Tentang bengong.id</h2>
+  <p style="line-height:1.8;opacity:.9;font-size:15px">
+    bengong.id dibuat sama satu orang yang kebanyakan bengong jam 00.00 - Subuh.<br><br>
+    Bukan psikolog. Bukan guru. Bukan motivator. Bukan dokter.<br>
+    Cuma nyediain tempat buat diem, musik hujan, timer, sama Box buat nulis.<br><br>
+    Karena kita percaya, kadang jawaban itu dateng bukan pas lu mikir keras,<br>
+    tapi pas lu bengong.
+  </p>
+
+  <div style="background:#0a1628;border:1px solid #2a4a6b;padding:20px;border-radius:16px;margin-top:22px">
+    <h3 style="margin-bottom:10px">Hubungi Kita (Kalo Perlu Banget)</h3>
+    <p style="line-height:1.8;font-size:14px;opacity:.9">
+      📧 Email: <a href="mailto:bengong.id.official@gmail.com" style="color:#7dd3fc">bengong.id.official@gmail.com</a><br>
+      📸 Instagram: <a href="https://instagram.com/bengong.id12" target="_blank" style="color:#7dd3fc">@bengong.id12</a><br>
+      🕛 Jam Bales: <b>00.00 - 04.30 WIB aja</b><br>
+      Siang kita tidur, bro. Jadi kalo chat siang, dibalesnya malem.
+    </p>
+    <p style="font-size:12px;opacity:.6;margin-top:12px">
+      Jangan kirim kata sandi Box kamu ke email / IG kita ya. Kita gak pernah minta itu. Kalo ada yang minta, itu penipu.
+    </p>
+  </div>
+</section>
+<footer>bengong.id • Apa yang terjadi di Bengong, tetap di Bengong. Bahkan kita gak tau. • Buka 00.00 - Subuh<br><br>
+<a href="#" onclick="bukaDisclaimer(event)" style="color:#a8c8e8">Disclaimer & Aturan 18+</a> • Khusus 18 Tahun Ke Atas • Ini Bukan Terapi
+</footer>
+</div>
+
+<div id="popupDisclaimer" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#0f2240;max-width:500px;width:100%;padding:24px;border-radius:20px;max-height:80vh;overflow:auto">
+    <h2 style="margin-bottom:12px">Disclaimer - Baca Dulu Bro</h2>
+    <p style="font-size:14px;line-height:1.8;opacity:.9">
+      <b>1. Bukan Terapi.</b><br>
+      bengong.id bukan pengganti terapi, psikolog, psikiater, atau dokter. Ini cuma tempat diem, tempat bengong, tempat nulis.
+      <br><br>
+      <b>2. Khusus 18+.</b><br>
+      Web ini cuma buat yang udah 18 tahun ke atas. Kalo lu masih di bawah 18, tutup web ini, besok balik lagi kalo udah 18.
+      <br><br>
+      <b>3. Kalo Gak Enak, Berhenti.</b><br>
+      Kalo pas bengong lu ngerasa pusing, panik, sesek, nangis gak berhenti, langsung berhenti. Buka mata, minum air, pegang HP lagi. Jangan dipaksain.
+      <br><br>
+      <b>4. Tanggung Jawab Lu.</b><br>
+      Apa yang lu rasain pas bengong, apa yang lu tulis di Box, itu tanggung jawab lu sendiri. Kita cuma nyediain tempat, musik, timer, sama Box yang terkunci.
+      <br><br>
+      <b>5. Jangan Bengong Sambil Nyetir / Kerja Berbahaya.</b><br>
+      Bengong itu harus duduk, diem, aman. Jangan sambil nyetir, jangan sambil di atap, jangan sambil ngapa-ngapain yang bahaya.
+    </p>
+    <button class="btn btn-primary" style="width:100%;margin-top:16px" onclick="tutupDisclaimer()">Oke, Gue Ngerti</button>
+  </div>
+</div>
+
+<script>
+const JAM_BUKA_MENIT = 0;
+const JAM_TUTUP_MENIT = 4*60+30;
+const MODE_TES = false;
+function getWIB(){
+  if(MODE_TES){ let d=new Date(); d.setHours(1,0,0,0); return d; }
+  return new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Jakarta"}));
+}
+function cekBuka(){
+  let wib=getWIB();
+  let menit=wib.getHours()*60+wib.getMinutes();
+  return {buka: menit>=JAM_BUKA_MENIT && menit<JAM_TUTUP_MENIT, wib, menit};
+}
+function updateGerbang(){
+  let {buka,wib}=cekBuka();
+  let gerbang=document.getElementById('gerbangTutup');
+  let kusir=document.getElementById('layarKusir');
+  let isi=document.getElementById('isiUtama');
+  if(buka){
+    gerbang.classList.add('hidden');
+    kusir.classList.add('hidden');
+    isi.classList.remove('hidden');
+  } else {
+    let lagiBengong = !document.getElementById('ruang').classList.contains('hidden') && timerInterval;
+    if(lagiBengong){
+      kusir.classList.remove('hidden');
+      gerbang.classList.add('hidden');
+      isi.classList.add('hidden');
+      clearInterval(timerInterval);
+      if(typeof stopBengong==='function') stopBengong();
+    } else {
+      gerbang.classList.remove('hidden');
+      kusir.classList.add('hidden');
+      isi.classList.add('hidden');
+    }
+    let target=new Date(wib); target.setHours(24,0,0,0);
+    let selisih=target-wib; if(selisih<0) selisih+=24*60*60*1000;
+    let j=Math.floor(selisih/3600000), m=Math.floor((selisih%3600000)/60000), d=Math.floor((selisih%60000)/1000);
+    document.getElementById('countdownTutup').innerHTML = String(j).padStart(2,'0')+" : "+String(m).padStart(2,'0')+" : "+String(d).padStart(2,'0')+'<div style="font-size:13px;color:#888;letter-spacing:2px;margin-top:5px">SISA WAKTU SAMPE BUKA</div>';
+  }
+}
+function setAlarm(){
+  if(window.Notification && Notification.permission!=="granted") Notification.requestPermission();
+  alert("Oke bro, alarm disetel jam 23.55. Jangan tutup tab ini ya, biarin kebuka di background.");
+  let now=new Date(); let target=new Date(); target.setHours(23,55,0,0);
+  if(target<now) target.setDate(target.getDate()+1);
+  setTimeout(()=>{ alert("bengong.id mau buka 5 menit lagi!"); }, target-now);
+}
+updateGerbang();
+setInterval(updateGerbang,1000);
+
+let paketDipilih=null, durasi=0, metodeBayar=null, timerInterval=null, sisa=0;
+let userPass="";
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+
+// ===== LOGIKA 18+ & DISCLAIMER =====
+function cekTombolDaftar(){
+  let umur = document.getElementById('cekUmur').checked;
+  let disc = document.getElementById('cekDisclaimer').checked;
+  let btn = document.getElementById('btnDaftar');
+  if(umur && disc){
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    btn.style.cursor = "pointer";
+    btn.innerText = "Buat Akun & Lanjut Pilih Paket";
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = ".4";
+    btn.style.cursor = "not-allowed";
+    btn.innerText = "Centang 2 Kotak Di Atas Dulu Bro";
+  }
+}
+function bukaDisclaimer(e){
+  if(e) e.preventDefault();
+  document.getElementById('popupDisclaimer').classList.remove('hidden');
+}
+function tutupDisclaimer(){
+  document.getElementById('popupDisclaimer').classList.add('hidden');
+}
+
+function daftar(){
+  if(!document.getElementById('cekUmur').checked || !document.getElementById('cekDisclaimer').checked){
+    alert('Centang dulu bro: Gue 18+ & Gue udah baca Disclaimer. Baru bisa daftar.');
+    return;
+  }
+  userPass=document.getElementById('pass').value;
+  let nama=document.getElementById('nama').value;
+  if(!nama||!userPass){alert('Isi nama & kata sandi dulu bro');return}
+  localStorage.setItem('bengong_nama',nama);
+  document.getElementById('daftarMsg').innerText='Mantap '+nama+'! Akun dibuat. Sekarang pilih paket di bawah.';
+  scrollToId('paket');
+}
+function pilihPaket(kode,detik,el){
+  document.querySelectorAll('.paket').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  paketDipilih=kode; durasi=detik; sisa=detik;
+  let jam=(detik/3600);
+  document.getElementById('paketTerpilih').innerText='Paket '+kode+' dipilih • Durasi otomatis: '+jam+' jam • Timer siap.';
+}
+function pilihBayar(m,el){
+  document.querySelectorAll('.pay').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active'); metodeBayar=m;
+}
+function bayar(){
+  if(!paketDipilih){alert('Pilih paket dulu bro');return}
+  if(!metodeBayar){alert('Pilih metode pembayaran dulu');return}
+  document.getElementById('bayarMsg').innerText='Pembayaran '+metodeBayar+' untuk Paket '+paketDipilih+' dicatat. Silakan transfer / scan, lalu masuk Ruang Bengong. (Demo: langsung dibuka)';
+  document.getElementById('ruang').classList.remove('hidden');
+  document.getElementById('infoRuang').innerText='Paket '+paketDipilih+' • Bayar via '+metodeBayar+' • Durasi: '+(durasi/3600)+' jam';
+  scrollToId('ruang');
+}
+function gantiMusik(){ let m=document.getElementById('musik').value; if(typeof playBengong==='function') playBengong(m); }
+function format(s){let h=Math.floor(s/3600),m=Math.floor((s%3600)/60),d=s%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(d).padStart(2,'0')}
+function mulaiBengong(){
+  if(!cekBuka().buka){ alert("Udah tutup bro. Besok lagi jam 00.00."); updateGerbang(); return; }
+  let sisaSampeTutup = JAM_TUTUP_MENIT - cekBuka().menit;
+  if(durasi/60 > sisaSampeTutup){
+    if(!confirm("Waktu sampe tutup tinggal "+sisaSampeTutup+" menit, paket lu "+(durasi/3600)+" jam. Kalo keusir, gak dapet sertifikat. Tetep lanjut?")) return;
+  }
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    if(!cekBuka().buka){ clearInterval(timerInterval); updateGerbang(); return; }
+    if(sisa<=0){clearInterval(timerInterval);selesaiBengong();return}
+    sisa--; document.getElementById('timer').innerText=format(sisa);
+  },1000);
+  if(typeof playBengong==='function') playBengong(document.getElementById('musik').value);
+  let kalimat=["Tarik napas... lepasin...","Apa yang paling lu takutin hari ini?","Siapa yang pengen lu maafin?","Kalo hari ini bisa diulang, apa yang pengen lu ubah?","Udah, diem aja dulu 2 menit, gak usah mikir."];
+  let idx=0;
+  setInterval(()=>{ idx++; if(idx>=kalimat.length) idx=0; let p=document.getElementById('pemantik'); if(p) p.innerText=kalimat[idx]; },30000);
+  document.body.style.background="#000";
+}
+function selesaiBengong(){
+  let namaMember=document.getElementById('nama') ? document.getElementById('nama').value : 'Member Bengong';
+  let tgl=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  alert('SELAMAT! 🏆\n\n'+namaMember+' telah berhasil bengong.\n'+tgl+'\n\nScreenshot ini buat sertifikat lu!');
+  clearInterval(timerInterval);
+  if(typeof stopBengong==='function') stopBengong();
+  document.getElementById('hasil').classList.remove('hidden');
+  scrollToId('hasil');
+}
+function enkripsi(teks,pass){ let out=''; for(let i=0;i<teks.length;i++){out+=String.fromCharCode(teks.charCodeAt(i)^pass.charCodeAt(i%pass.length))} return btoa(unescape(encodeURIComponent(out))); }
+function dekripsi(enc,pass){ try{let s=decodeURIComponent(escape(atob(enc))); let out=''; for(let i=0;i<s.length;i++){out+=String.fromCharCode(s.charCodeAt(i)^pass.charCodeAt(i%pass.length))} return out}catch(e){return 'Kata sandi salah / Box rusak bro';} }
+function simpanBox(){
+  let teks=document.getElementById('hasilText').value;
+  let pass=document.getElementById('pass').value || userPass || prompt('Masukkan kata sandi Box kamu:');
+  if(!teks||!pass){alert('Isi hasil bengong & kata sandi dulu');return}
+  let data=JSON.parse(localStorage.getItem('bengong_box')||'[]');
+  data.push({waktu:new Date().toLocaleString(), paket:paketDipilih, isi:enkripsi(teks,pass)});
+  localStorage.setItem('bengong_box',JSON.stringify(data));
+  document.getElementById('simpanMsg').innerText='Tersimpan di Box kamu & terkunci. Kita sebagai pemilik gak bisa baca isinya.';
+  document.getElementById('hasilText').value='';
+}
+function bukaBox(){
+  let pass=document.getElementById('bukaPass').value;
+  let data=JSON.parse(localStorage.getItem('bengong_box')||'[]');
+  if(!data.length){document.getElementById('isiBox').innerText='Box masih kosong. Bengong dulu bro.';return}
+  let hasil=data.map((d,i)=>'--- Bengong '+(i+1)+' | '+d.waktu+' | Paket '+d.paket+' ---\n'+dekripsi(d.isi,pass)).join('\n\n');
+  document.getElementById('isiBox').innerText=hasil;
+}
+if(typeof gantiMusik==='function') gantiMusik();
+</script>
+<script src="musik.js"></script>
+</body>
+</html>
